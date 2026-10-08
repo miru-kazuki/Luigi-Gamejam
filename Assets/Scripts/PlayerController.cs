@@ -11,6 +11,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
 
+    [Header("Item Interaction")]
+    [SerializeField] private TransferableItem transferableItem;
+
     private Rigidbody2D rb;
     private Vector2 moveInput;
     private bool isGrounded;
@@ -49,7 +52,10 @@ public class PlayerController : MonoBehaviour
 
     protected virtual void Interact()
     {
-        // Override di script turunan kalau butuh spesifik skill
+        if (transferableItem != null)
+        {
+            transferableItem.TryTransferItem(transform);
+        }
     }
 
     private void OnDrawGizmosSelected()
