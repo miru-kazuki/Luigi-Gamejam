@@ -14,19 +14,39 @@ public class PlayerController : MonoBehaviour
     [Header("Item Interaction")]
     [SerializeField] private TransferableItem transferableItem;
 
+    [Header("Status Player")]
+    public bool isFacingRight = true;
+    public bool hasJimat = false;
+
     private Rigidbody2D rb;
     private Vector2 moveInput;
     private bool isGrounded;
+    private SpriteRenderer spriteRenderer; // Variabel penampung SpriteRenderer
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>(); // Ambil komponen SpriteRenderer
     }
 
     private void Update()
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
         rb.linearVelocity = new Vector2(moveInput.x * moveSpeed, rb.linearVelocity.y);
+
+        // --- Fitur Flip Sprite & Update Arah Hadap ---
+        if (moveInput.x > 0)
+        {
+            isFacingRight = true;
+            if (spriteRenderer != null) spriteRenderer.flipX = false; // Hadap kanan
+            // Alternatif jika tanpa SpriteRenderer: transform.localScale = new Vector3(1, 1, 1);
+        }
+        else if (moveInput.x < 0)
+        {
+            isFacingRight = false;
+            if (spriteRenderer != null) spriteRenderer.flipX = true; // Hadap kiri (flip)
+            // Alternatif jika tanpa SpriteRenderer: transform.localScale = new Vector3(-1, 1, 1);
+        }
     }
 
     public void OnMove(InputAction.CallbackContext context)
