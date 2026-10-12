@@ -6,7 +6,7 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] private PlayerType playerType;
     [SerializeField] private Camera mainCamera;
     [SerializeField] private Animator playerAnimator; // Assign Animator milik Player
-    [SerializeField] private float interactionRange = 3f; // Jarak maksimal interaksi
+    [SerializeField] private float interactionRange = 5f; // Jarak maksimal interaksi
     private void Awake()
     {
         if (mainCamera == null) mainCamera = Camera.main;
@@ -14,8 +14,11 @@ public class PlayerInteraction : MonoBehaviour
     }
 
     private void Update()
-    {
-        if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
+    {   
+        if (playerType == PlayerType.Player1 && Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame)
+        {
+            TryInteract();
+        } else if (playerType == PlayerType.Player2 && Mouse.current != null && Mouse.current.rightButton.wasPressedThisFrame)
         {
             TryInteract();
         }

@@ -5,6 +5,7 @@ public class DoorObstacle : MonoBehaviour, IInteractable
 {
     [SerializeField] private Animator doorAnimator;
     [SerializeField] private float destroyDelay = 1.0f;
+
     private bool isInteracting = false;
 
     public void Interact(PlayerType player)
