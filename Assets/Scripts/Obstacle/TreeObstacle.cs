@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
+
 public class TreeObstacle : MonoBehaviour, IInteractable
 {
     [SerializeField] private Animator treeAnimator; // opsional jika animasi ada di objek pohon
@@ -28,7 +29,7 @@ public class TreeObstacle : MonoBehaviour, IInteractable
         // Matikan collider agar player tidak bisa nge-klik/nabrak berulang kali saat animasi jalan
         Collider2D col = GetComponent<Collider2D>();
         if (col != null) col.enabled = false;
-
+        
         // Tunggu sampai animasi selesai
         yield return new WaitForSeconds(destroyDelay);
 
