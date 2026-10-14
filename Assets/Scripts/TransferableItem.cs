@@ -7,7 +7,7 @@ public class TransferableItem : MonoBehaviour
     [SerializeField] private Transform player2;
 
     [Header("Transfer Settings")]
-    [SerializeField] private float maxTransferDistance = 4f;
+    [SerializeField] private float maxTransferDistance = 1f;
     [SerializeField] private Vector3 holdOffset = new Vector3(0f, 0.8f, 0f);
 
     [Header("UI / Visual Indicator")]

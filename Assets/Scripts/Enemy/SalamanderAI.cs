@@ -3,6 +3,11 @@ using UnityEngine.SceneManagement;
 
 public class SalamanderAI : MonoBehaviour
 {
+    [Header("Visual")]
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Sprite salamanderSprite;
+    [SerializeField] private Sprite fogSprite;
+
     [Header("Settings")]
     [SerializeField] private float moveSpeed = 3f;
     [SerializeField] private PlayerController[] players;
@@ -19,6 +24,9 @@ public class SalamanderAI : MonoBehaviour
                 players[i] = playerObjs[i].GetComponent<PlayerController>();
             }
         }
+
+        if (spriteRenderer == null)
+            spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void Update()
@@ -39,19 +47,29 @@ public class SalamanderAI : MonoBehaviour
                                              (!playerIsOnRight && player.isFacingRight);
 
                 if (isLookingAtSalamander)
-                {
+                {   SetVisual(true);
                     // Player membawa jimat dan menatap salamander -> Berhenti
                     return;
                 }
             }
         }
 
+        SetVisual(false);
         // Jika tidak ada yang menghentikan, kejar player terdekat
         PlayerController targetPlayer = GetClosestPlayer();
         if (targetPlayer != null)
         {
             MoveTowardsTarget(targetPlayer.transform);
         }
+    }
+
+    private void SetVisual(bool useFog)
+    {
+        if (spriteRenderer == null) return;
+
+        spriteRenderer.sprite = useFog
+            ? fogSprite
+            : salamanderSprite;
     }
 
     private PlayerController GetClosestPlayer()
